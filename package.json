@@ -1,0 +1,51 @@
+{
+  "name": "pageloader",
+  "version": "1.0.0",
+  "description": "My third project on Hexlet",
+  "bin": {
+    "page-loader": "dist/bin/page-loader.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikhailsmyslov/backend-project-lvl3.git"
+  },
+  "keywords": [
+    "page",
+    "loader",
+    "hexlet"
+  ],
+  "author": "Mikhail Smyslov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikhailsmyslov/backend-project-lvl3/issues"
+  },
+  "homepage": "https://github.com/mikhailsmyslov/backend-project-lvl3#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.2.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.15.2",
+    "jest": "^24.9.0",
+    "nock": "^10.0.6"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "commander": "^3.0.0"
+  }
+}
