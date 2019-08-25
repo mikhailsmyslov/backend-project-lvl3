@@ -11,7 +11,9 @@ const getFileName = (pageUrl) => {
 const pageLoader = (pageUrl, outputPath = __dirname) => axios.get(pageUrl)
   .then((responce) => {
     const fileName = getFileName(pageUrl);
-    fs.writeFile(path.join(outputPath, fileName), responce.data);
+    const fullOutputPath = path.join(outputPath, fileName);
+    fs.writeFile(fullOutputPath, responce.data);
+    console.log(`Succesfull downloaded at: ${fullOutputPath}`);
     return 'Done';
   });
 
