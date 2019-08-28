@@ -19,7 +19,7 @@ Example of usage:
 [![asciicast](https://asciinema.org/a/bwTHQF5R6TClBnhUmLTinFdUG.svg)](https://asciinema.org/a/bwTHQF5R6TClBnhUmLTinFdUG)  
 
 #### Options
-  -V, --version             output the version number
-  -o, --output [directory]  output directory
-  -h, --help                output usage information
+  `-V, --version`              output the version number  
+  ` -o, --output [directory]`  output directory  
+  `-h, --help`                 output usage information  
 
