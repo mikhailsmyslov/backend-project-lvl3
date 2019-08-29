@@ -9,8 +9,11 @@ program
   .description('Downloads specified URL from the internet')
   .arguments('<url>')
   .option('-o, --output [directory]', 'output directory')
-  .action((url) => pageLoader(url, program.output));
+  .action((url) => {
+    pageLoader(url, program.output);
+  });
 
+process.env.DEBUG = 'page-loader';
 program.parse(process.argv);
 
 if (program.args.length === 0) program.help();
