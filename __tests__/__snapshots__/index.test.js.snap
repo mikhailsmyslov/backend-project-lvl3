@@ -4,4 +4,4 @@ exports[`FS error 1`] = `"ENOENT: no such file or directory, mkdir '/notExist/te
 
 exports[`HTTP code is not 200 1`] = `"Expected HTTP status code 200, but recieved 204"`;
 
-exports[`HTTP error 1`] = `"Request failed with status code 404"`;
+exports[`HTTP error 4xx 1`] = `"Request failed with status code 404"`;
