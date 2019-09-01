@@ -11,10 +11,7 @@ program
   .option('-o, --output [directory]', 'output directory')
   .action((url) => {
     pageLoader(url, program.output)
-      .then(() => {
-        console.log('Succesful downloaded.');
-        process.exitCode = 0;
-      })
+      .then(() => console.log('Succesful downloaded.'))
       .catch((err) => {
         console.error(`${err.message}`);
         process.exitCode = 1;

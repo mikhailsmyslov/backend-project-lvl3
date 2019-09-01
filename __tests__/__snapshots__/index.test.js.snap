@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FS error 1`] = `"ENOENT: no such file or directory, mkdir '/notExist/testpage-com_files'"`;
+exports[`FS error: ENOENT 1`] = `"ENOENT: no such file or directory, mkdir '/notExist/testpage-com_files'"`;
 
-exports[`HTTP code is not 200 1`] = `"Expected HTTP status code 200, but recieved 204"`;
+exports[`HTTP error: 404 1`] = `"Request failed with status code 404"`;
 
-exports[`HTTP error 4xx 1`] = `"Request failed with status code 404"`;
+exports[`Should work: Some resource is not downloaded 1`] = `"Something went wrong"`;

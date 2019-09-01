@@ -17,7 +17,10 @@ My third project on [Hexlet](https://ru.hexlet.io)
 `page-loader [options] <url>`  
 
 Example of usage:  
-[![asciicast](https://asciinema.org/a/yWfd5USaFO7KLmPTK1L2G1WZu.svg)](https://asciinema.org/a/yWfd5USaFO7KLmPTK1L2G1WZu)
+[![asciicast](https://asciinema.org/a/HJTo3Fss05bMHAzukdEbMhQfq.svg)](https://asciinema.org/a/HJTo3Fss05bMHAzukdEbMhQfq)  
+
+Errors handling:  
+[![asciicast](https://asciinema.org/a/yWfd5USaFO7KLmPTK1L2G1WZu.svg)](https://asciinema.org/a/yWfd5USaFO7KLmPTK1L2G1WZu)  
 
 #### Options
   `-V, --version`              output the version number  
