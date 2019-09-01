@@ -7,29 +7,42 @@ import pageLoader from '../src';
 
 nock.disableNetConnect();
 
-const baseUrl = 'https://google.com';
 const repliesPath = `${__dirname}/__fixtures__/replies`;
-const referenceHtml = fs.readFileSync(`${__dirname}/__fixtures__/expected/google-com.html`, 'utf-8');
+const referenceHtml = fs.readFileSync(`${__dirname}/__fixtures__/expected/testpage-com.html`, 'utf-8');
 const expectedHtml = cheerio.load(referenceHtml).html();
 
-nock(baseUrl)
-  .get('/')
-  .replyWithFile(200, `${repliesPath}/google.html`);
-nock(baseUrl)
-  .get('/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png')
-  .replyWithFile(200, `${repliesPath}/googlelogo_color_272x92dp.png`);
-nock(baseUrl)
-  .get('/tia/tia.png')
-  .replyWithFile(200, `${repliesPath}/tia.png`);
-
 let tmpDirPath = '';
+const baseUrl = 'https://testpage.com';
 
-beforeEach(async () => {
-  tmpDirPath = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'pageloadertest-'));
+beforeEach(() => {
+  nock(baseUrl)
+    .get('/').replyWithFile(200, `${repliesPath}/testpage.html`)
+    .get('/images/beer.jpg')
+    .replyWithFile(200, `${repliesPath}/images/beer.jpg`)
+    .get('/style.css')
+    .replyWithFile(200, `${repliesPath}/style.css`)
+    .get('/script')
+    .replyWithFile(200, `${repliesPath}/script`)
+    .get('/notfound')
+    .reply(404)
+    .get('/not200')
+    .reply(302, undefined, { Location: '/redirect' })
+    .get('/redirect')
+    .reply(204);
+  tmpDirPath = fs.mkdtempSync(path.join(os.tmpdir(), 'pageloadertest-'));
 });
 
-test('should work', async () => {
+test('HTTP error 4xx', async () => expect(pageLoader(`${baseUrl}/notfound`, tmpDirPath))
+  .rejects.toThrowErrorMatchingSnapshot());
+
+test('HTTP code is not 200', async () => expect(pageLoader(`${baseUrl}/not200`, tmpDirPath))
+  .rejects.toThrowErrorMatchingSnapshot());
+
+test('FS error', async () => expect(pageLoader(baseUrl, '/notExist'))
+  .rejects.toThrowErrorMatchingSnapshot());
+
+test('Should work', async () => {
   await pageLoader(baseUrl, tmpDirPath);
-  const html = await fs.promises.readFile(`${tmpDirPath}/google-com.html`, 'utf-8');
-  expect(html).toBe(expectedHtml);
+  const html = await fs.promises.readFile(`${tmpDirPath}/testpage-com.html`, 'utf-8');
+  await expect(html).toBe(expectedHtml);
 });
