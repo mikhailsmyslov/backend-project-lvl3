@@ -21,10 +21,3 @@ export const getDirName = (pageUrl) => getResourceName(pageUrl).concat('_files')
 const pipeline = util.promisify(stream.pipeline);
 export const downloadResource = (fromUrl, toLocalPath) => axios.get(fromUrl, { responseType: 'stream' })
   .then(({ data }) => pipeline(data, fs.createWriteStream(toLocalPath)));
-
-export default {
-  isLocalResource,
-  getPageName,
-  getDirName,
-  downloadResource,
-};

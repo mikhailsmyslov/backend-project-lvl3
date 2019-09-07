@@ -5,7 +5,7 @@ import url from 'url';
 import path from 'path';
 import cheerio from 'cheerio';
 import Listr from 'listr';
-import utils from './utils';
+import * as utils from './utils';
 
 const tagsAttributes = { img: 'src', link: 'href', script: 'src' };
 const getLink = ({ name, attribs }) => attribs[tagsAttributes[name]];
