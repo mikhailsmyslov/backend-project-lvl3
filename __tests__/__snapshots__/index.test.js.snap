@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FS error: ENOENT 1`] = `"ENOENT: no such file or directory, mkdir '/notExist/testpage-com_files'"`;
+exports[`FS error: ENOENT 1`] = `"ENOENT: no such file or directory, open '/notExist/testpage-com.html'"`;
 
 exports[`HTTP error: 404 1`] = `"Request failed with status code 404"`;
 

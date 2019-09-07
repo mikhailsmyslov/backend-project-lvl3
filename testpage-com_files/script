@@ -1,0 +1,4 @@
+function script() {
+  console.log('I should be downloaded');
+}
+script();
