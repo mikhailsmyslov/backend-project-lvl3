@@ -1,54 +1,55 @@
 import axios from 'axios';
 import { promises as fs } from 'fs';
 import debug from 'debug';
-import url from 'url';
 import path from 'path';
 import cheerio from 'cheerio';
 import Listr from 'listr';
 import * as utils from './utils';
 
 const tagsAttributes = { img: 'src', link: 'href', script: 'src' };
-const getLink = ({ name, attribs }) => attribs[tagsAttributes[name]];
+const jquerySelector = Object.entries(tagsAttributes).map(([tag, attr]) => `${tag}[${attr}]`).join();
+
+const getLinkFromNode = ({ name: tagName, attribs }) => attribs[tagsAttributes[tagName]];
+const getAttrNameFromNode = ({ name: tagName }) => tagsAttributes[tagName];
 
 const log = debug('page-loader');
 
 export default (pageUrl, outputPath) => {
-  const filesDirName = utils.getDirName(pageUrl);
-  const pageName = utils.getPageName(pageUrl);
+  const filesDirName = utils.buildFilesDirName(pageUrl);
+  const pageName = utils.buildPageFileName(pageUrl);
+  const baseUrl = new URL(pageUrl).origin;
 
-  let $;
-  const localResourses = [];
+  const downloadsList = [];
 
   log(`Getting data from ${pageUrl}`);
   return axios.get(pageUrl)
-    .then(({ data }) => {
-      $ = cheerio.load(data);
-      log('Filtering DOM: Finding local resources');
-      return $('*').filter((_i, node) => {
-        const link = getLink(node);
-        return !!link && utils.isLocalResource(link);
-      });
-    })
-    .then((dom) => {
-      const { protocol, host } = url.parse(pageUrl);
-      dom.each((_i, node) => {
-        const resUrl = url.format({ protocol, host, pathname: getLink(node) });
-        const { name, ext } = path.parse(resUrl);
-        const localPath = path.format({
-          dir: filesDirName,
-          base: name.replace(/\W/g, '-').concat(ext),
+    .then(({ data: html }) => {
+      const dom = cheerio.load(html);
+
+      dom(jquerySelector)
+        .filter((_i, node) => {
+          const link = getLinkFromNode(node);
+          return utils.isLocalResource(link);
+        })
+        .each((_i, node) => {
+          const link = getLinkFromNode(node);
+          const fileName = utils.buildFileNameFromLink(link);
+          const url = new URL(link, baseUrl).href;
+          const relLocalPath = path.join(filesDirName, fileName);
+          const absLocalPath = path.join(outputPath, relLocalPath);
+
+          log(`Replacing link "${link}" with "${relLocalPath}"`);
+          const attrName = getAttrNameFromNode(node);
+          dom(node).attr(attrName, relLocalPath);
+
+          downloadsList.push({ from: url, to: absLocalPath });
         });
 
-        log(`Replacing link "${getLink(node)}" with "${localPath}"`);
-        const attrName = tagsAttributes[node.name];
-        $(node).attr(attrName, localPath);
-
-        localResourses.push({ resUrl, localPath });
-      });
+      return dom.html();
     })
-    .then(() => {
+    .then((html) => {
       log('Downloading rendered page');
-      return fs.writeFile(path.join(outputPath, pageName), $.html());
+      return fs.writeFile(path.join(outputPath, pageName), html);
     })
     .then(() => {
       log(`Creating directory "${filesDirName} in ${outputPath}"`);
@@ -56,10 +57,8 @@ export default (pageUrl, outputPath) => {
     })
     .then(() => {
       log('Downloading local resources');
-      const tasks = localResourses.map(({ resUrl, localPath }) => ({
-        title: resUrl,
-        task: () => utils.downloadResource(resUrl, path.join(outputPath, localPath)),
-      }));
+      const tasks = downloadsList
+        .map(({ from, to }) => ({ title: from, task: () => utils.downloadFile(from, to) }));
       return new Listr(tasks, { concurrent: true, exitOnError: false }).run();
     });
 };
