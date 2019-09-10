@@ -16,7 +16,7 @@ export const buildPageFileName = (pageUrl) => buildName(pageUrl).concat('.html')
 
 export const buildFilesDirName = (pageUrl) => buildName(pageUrl).concat('_files');
 
-export const isLocalResource = (link) => !(/^[\w+.]*:|\/\//).test(link);
+export const isLocalResource = (link) => !(/^[\w+]*:|\/\//).test(link);
 
 export const downloadFile = (fromUrl, toLocalPath) => axios
   .get(fromUrl, { responseType: 'stream' })
