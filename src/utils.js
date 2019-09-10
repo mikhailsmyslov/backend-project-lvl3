@@ -18,11 +18,13 @@ export const buildFilesDirName = (pageUrl) => buildName(pageUrl).concat('_files'
 
 export const isLocalResource = (link) => !(/^[\w+]*:|\/\//).test(link);
 
-export const downloadFile = (fromUrl, toLocalPath) => axios
-  .get(fromUrl, { responseType: 'stream' })
-  .then(({ data }) => pipeline(data, fs.createWriteStream(toLocalPath)));
+export const downloadFile = (fromUrl, toLocalPath) => axios.get(fromUrl, { responseType: 'stream' })
+  .then(
+    ({ data }) => pipeline(data, fs.createWriteStream(toLocalPath)),
+  );
 
 export const buildFileNameFromLink = (link) => {
   const { name, ext } = path.parse(link);
-  return `${name.replace(/\W/g, '-')}${ext}`;
+  const newName = name.replace(/\W/g, '-');
+  return path.format({ name: newName, ext });
 };
