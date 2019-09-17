@@ -17,10 +17,7 @@ My third project on [Hexlet](https://ru.hexlet.io)
 `page-loader [options] <url>`  
 ![Usage demo](https://github.com/mikhailsmyslov/Pictures/blob/master/pageloader/usage.gif?raw=true)
 
-Example of usage:  
-[![asciicast](https://asciinema.org/a/pT4B1H0By0c0ZcEMXQhQRnIdH.svg)](https://asciinema.org/a/pT4B1H0By0c0ZcEMXQhQRnIdH) 
-
-Errors handling:  
+### Errors handling
 ![ErrHandling demo](https://github.com/mikhailsmyslov/Pictures/blob/master/pageloader/errhandling.gif?raw=true) 
 
 #### Options
