@@ -11,16 +11,17 @@ My third project on [Hexlet](https://ru.hexlet.io)
 
 ### Installation
 `npm install page-loader -g`    
-[![asciicast](https://asciinema.org/a/mMhMlKArMrnBXsR2AExC70idY.svg)](https://asciinema.org/a/mMhMlKArMrnBXsR2AExC70idY)
+![Installation demo](https://github.com/mikhailsmyslov/Pictures/blob/master/pageloader/installation.gif?raw=true)
 
 ### Usage
 `page-loader [options] <url>`  
+![Usage demo](https://github.com/mikhailsmyslov/Pictures/blob/master/pageloader/usage.gif?raw=true)
 
 Example of usage:  
 [![asciicast](https://asciinema.org/a/pT4B1H0By0c0ZcEMXQhQRnIdH.svg)](https://asciinema.org/a/pT4B1H0By0c0ZcEMXQhQRnIdH) 
 
 Errors handling:  
-[![asciicast](https://asciinema.org/a/cdU35HE8UlLV54CiT2X5uQVcm.svg)](https://asciinema.org/a/cdU35HE8UlLV54CiT2X5uQVcm)  
+![ErrHandling demo](https://github.com/mikhailsmyslov/Pictures/blob/master/pageloader/errhandling.gif?raw=true) 
 
 #### Options
   `-V, --version`              output the version number  
