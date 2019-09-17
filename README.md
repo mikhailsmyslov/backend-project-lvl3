@@ -10,11 +10,13 @@ ______________________
 My third project on [Hexlet](https://ru.hexlet.io)  
 
 ### Installation
-`npm install page-loader -g`    
+`npm install page-loader -g`  
+
 ![Installation demo](https://github.com/mikhailsmyslov/Pictures/blob/master/pageloader/installation.gif?raw=true)
 
 ### Usage
 `page-loader [options] <url>`  
+
 ![Usage demo](https://github.com/mikhailsmyslov/Pictures/blob/master/pageloader/usage.gif?raw=true)
 
 ### Errors handling
